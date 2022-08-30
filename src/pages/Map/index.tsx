@@ -19,6 +19,7 @@ export const MapComp = (props: any) => {
       `${API_DOMAIN}app5O417XDRvX4a6U/favorites?api_key=${airTableAPIKey}`
     );
     const { records } = (await data.json()) as dataResp;
+
     const lnglatList = records
       .filter((i) => Object.keys(i.fields).length !== 0)
       .map((i) => i.fields);

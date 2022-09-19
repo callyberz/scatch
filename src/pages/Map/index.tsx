@@ -9,21 +9,25 @@ import './index.less';
 
 const API_DOMAIN = 'https://api.airtable.com/v0/';
 
-export const MapComp = (props: any) => {
+export const MapComp = () => {
   const { mapBoxToken, airTableAPIKey } = enviroment;
   const [popupInfo, setPopupInfo] = useState<any>(null);
   const [geoJsonData, setGeoJsonData] = useState<lnglat[]>([]);
 
   const fetchLocation = async () => {
-    const data = await fetch(
-      `${API_DOMAIN}app5O417XDRvX4a6U/favorites?api_key=${airTableAPIKey}`
-    );
-    const { records } = (await data.json()) as dataResp;
+    try {
+      const data = await fetch(
+        `${API_DOMAIN}app5O417XDRvX4a6U/favorites?api_key=${airTableAPIKey}`
+      );
+      const { records } = (await data.json()) as dataResp;
 
-    const lnglatList = records
-      .filter((i) => Object.keys(i.fields).length !== 0)
-      .map((i) => i.fields);
-    setGeoJsonData(lnglatList);
+      const lnglatList = records
+        .filter((i) => Object.keys(i.fields).length !== 0)
+        .map((i) => i.fields);
+      setGeoJsonData(lnglatList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
